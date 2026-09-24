@@ -21,7 +21,6 @@ jobs:
           cache: true
 
       - name: Install Dependencies
-        uses: subosito/flutter-action@v2 # أو أمر flutter pub get مباشر
         run: flutter pub get
 
       - name: Analyze Project Source
