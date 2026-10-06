@@ -1,4 +1,4 @@
-name: state_compare_app
+name: waddahp
 description: تطبيق تجريبي لمقارنة MVVM+BLoC و MVVM+Redux
 publish_to: 'none'
 version: 1.0.0+1
