@@ -128,7 +128,7 @@ class _BenchmarkPageState extends State<BenchmarkPage> {
             ),
             const SizedBox(height: 8),
             const Text(
-              'يقوم المحرك بتشغيل السيناريوهات الأربعة وتحليل الحساسية على كل من MVVM+BLoC و MVVM+Redux تحت ظروف متطابقة، مع حساب المتوسط الحسابي (Mean)، الانحراف المعياري (SD)، نسبة الفرق (PD%)، وحجم التأثير (Cohen's d).',
+              'يقوم المحرك بتشغيل السيناريوهات الأربعة وتحليل الحساسية على كل من MVVM+BLoC و MVVM+Redux تحت ظروف متطابقة، مع حساب المتوسط الحسابي (Mean)، الانحراف المعياري (SD)، نسبة الفرق (PD%)، وحجم التأثير (Cohen\'s d).',
             ),
             const SizedBox(height: 12),
             Row(
@@ -309,7 +309,7 @@ class _BenchmarkPageState extends State<BenchmarkPage> {
                   label: Text('نسبة الفرق (PD): ${pdTime.toStringAsFixed(2)}%'),
                 ),
                 Chip(
-                  label: Text('حجم التأثير (Cohen's d): ${dTime.toStringAsFixed(3)}'),
+                  label: Text('حجم التأثير (Cohen\'s d): ${dTime.toStringAsFixed(3)}'),
                 ),
                 Chip(
                   label: Text('عدد التكرارات (n): ${blocSum.count}'),
