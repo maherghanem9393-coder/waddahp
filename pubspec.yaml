@@ -1,5 +1,5 @@
-name: waddahp
-description: تطبيق تجريبي لمقارنة MVVM+BLoC و MVVM+Redux
+name: state_compare_app
+description: تطبيق تجريبي متكامل لمقارنة MVVM+BLoC و MVVM+Redux وفق منهجية الأطروحة
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  redux: ^5.0.0
+  flutter_redux: ^0.10.0
   equatable: ^2.0.5
   get_it: ^7.7.0
 

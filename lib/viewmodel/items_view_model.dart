@@ -1,20 +1,56 @@
-import '../data/items_repository.dart';
-import 'bloc/items_bloc.dart';
+import 'dart:async';
+import 'items_view_state.dart';
 
-/// طبقة ViewModel: تنسّق بين الواجهة وآلية إدارة الحالة (BLoC).
-/// الواجهة لا تتعامل مع الأحداث مباشرة، بل مع هذه الطبقة.
-class ItemsViewModel {
-  final ItemsBloc bloc;
-  final ItemsRepository _repository;
+export 'bloc/bloc_items_view_model.dart';
+export 'redux/redux_items_view_model.dart';
 
-  ItemsViewModel(this.bloc, this._repository);
+/// نوع آلية إدارة الحالة المستخدمة في التجربة (المتغير المستقل في الدراسة).
+enum ArchitectureMode {
+  bloc('MVVM+BLoC'),
+  redux('MVVM+Redux');
 
-  void load() => bloc.add(const LoadItems());
-  void add(String title) => bloc.add(AddItemRequested(title));
-  void toggle(int id) => bloc.add(ToggleItemRequested(id));
+  final String label;
+  const ArchitectureMode(this.label);
+}
 
-  bool get simulateError => _repository.simulateError;
-  void setSimulateError(bool value) => _repository.simulateError = value;
+/// الواجهة الموحدة لطبقة ViewModel ضمن نمط MVVM (الفصل الثالث - القسم 3.6).
+/// تعزل طبقة View عن تفاصيل التنفيذ الداخلي لـ BLoC أو Redux.
+abstract class ItemsViewModel {
+  ArchitectureMode get mode;
+  ItemsViewState get currentState;
+  Stream<ItemsViewState> get stateStream;
 
-  Future<void> dispose() => bloc.close();
+  bool get simulateError;
+  void setSimulateError(bool value);
+
+  int get networkDelayMs;
+  void setNetworkDelayMs(int value);
+
+  void resetData(int count);
+
+  /// السيناريو الأول وتحليل الحساسية: جلب قائمة بيانات (50، 100، 500، 2000 عنصر).
+  Future<void> load({int? count, int? customDelayMs});
+
+  /// إضافة عنصر جديد مع التحقق من صحة المدخلات.
+  Future<void> add(String title);
+
+  /// تبديل حالة عنصر.
+  Future<void> toggle(int id);
+
+  /// السيناريو الثاني: التحديثات المتكررة السريعة لحالة عنصر واحد.
+  Future<void> rapidUpdateItem(int id, {int iterations = 50});
+
+  /// السيناريو الثالث: عملية غير متزامنة تحاكي طلب شبكة بفترة انتظار محددة.
+  Future<void> runAsyncOperation({int delayMs = 400, int itemCount = 100});
+
+  /// السيناريو الرابع: معالجة بيانات متوسطة الحجم (تصفية وفرز 500 سجل).
+  Future<void> filterAndSort({
+    int datasetSize = 500,
+    String? query,
+    String? category,
+    bool? sortByPriorityDesc,
+    bool? onlyCompleted,
+  });
+
+  Future<void> dispose();
 }
